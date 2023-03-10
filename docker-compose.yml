@@ -3,8 +3,7 @@ version: "3"
 services:
   postgres:
     image: postgres:13
-    ports:
-      - "5432:5432"
+    restart: unless-stopped
     environment:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_USER=docker
@@ -17,13 +16,8 @@ services:
 
   api:
     image: ghcr.io/a13xie/spring-example:main
-    links:
-      - postgres
     depends_on: 
       - postgres
-    restart: on-failure
-    expose:
-      - 8080
     ports:
       - 8080:8080
     restart: unless-stopped
